@@ -1,0 +1,335 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+
+
+public class ConnectFour {
+	
+	public static String switchTurn(String playerChoice) {
+		String choice = playerChoice;
+		if (playerChoice.equals("X")) {
+			choice = "O";
+		}
+		else if(playerChoice.equals("O")) {
+			choice = "X";
+		}
+		else {
+			System.out.println("You shouldn't be here! Line 18");
+		}
+		return choice;
+	}
+	
+	public static String isLeftDownDiagonalWon(String[][] board) {
+		String winner = "";
+		for (int i = 0; i <= 5 ; i++) {
+			for (int j = 0; j <= 6; j++) {
+				try {
+					if (board[i][j] != null && (board[i][j] == board[i+1][j-1] && board[i][j] == board[i+2][j-2] && board[i][j] == board[i+3][j-3])) {
+						winner = board[i][j];
+						return winner;	
+					}
+				} catch (ArrayIndexOutOfBoundsException e) {
+					winner = "no";
+				}
+				
+			}
+		}
+
+		return winner;
+	}
+	
+	
+	public static String isRightDownDiagonalWon(String[][] board) {
+		String winner = "";
+		for (int i = 0; i <= 5 ; i++) {
+			for (int j = 0; j <= 6; j++) {
+				try {
+					if (board[i][j] != null && (board[i][j] == board[i+1][j+1] && board[i][j] == board[i+2][j+2] && board[i][j] == board[i+3][j+3])) {
+						winner = board[i][j];
+						return winner;
+					}
+				} catch (ArrayIndexOutOfBoundsException e) {
+					winner = "no";
+				}
+				
+			}
+		}
+
+		return winner;
+	}
+	public static String isVerticalWon(String[][] board) {
+		String winner = "";
+		for (int i = 0; i <= 6 ; i++) {
+			for (int j = 0; j <= 5; j++) {
+				try {
+					if (board[j][i] != null && (board[j][i] == board[j+1][i] && board[j][i] == board[j+2][i] && board[j][i] == board[j+3][i])) {
+						winner = board[j][i];
+						return winner;
+						
+					}
+				} catch (ArrayIndexOutOfBoundsException e) {
+					winner = "no";
+				}
+			}
+		}
+
+		return winner;
+	}
+	
+	public static String isHorizontalWon(String[][] board) {
+		String winner = "";
+		for (int i = 0; i <= 5 ; i++) {
+			for (int j = 0; j <= 6; j++) {
+				try {
+					if (board[i][j] != null && (board[i][j] == board[i][j+1] && board[i][j] == board[i][j+2] && board[i][j] == board[i][j+3])) {
+						winner = board[i][j];
+						return winner;
+					}
+				} catch (ArrayIndexOutOfBoundsException e) {
+					winner = "no";
+				}
+			}
+		}
+
+		return winner;
+	}
+	
+	public static void isGameWon(String playerChoice, String[][] board) {
+		String isHorizontalWon = isHorizontalWon(board);
+		String isVerticalWon = isVerticalWon(board);
+		String isRightDownDiagonalWon = isRightDownDiagonalWon(board);
+		String isLeftDownDiagonalWon = isLeftDownDiagonalWon(board);
+
+		String computerChoice = "";
+		if (playerChoice.equals("O")) {
+			computerChoice = "X";
+		}
+		else if (playerChoice.equals("X")) {
+			computerChoice = "O";
+		}
+		else {
+			System.out.println("Hey you shound't be here! Line 45");
+		}
+		
+		if (isHorizontalWon.equals(playerChoice)) {
+			System.out.println("The player wins horizontally!");
+		}
+		//else if(isHorizontalWon.equals("no")) {
+		//	System.out.println("Nobody has won horizontally.");
+		//}
+		else if(isHorizontalWon.equals(computerChoice)) {
+			System.out.println("The computer has won horizontally!");
+		}
+		
+		if (isVerticalWon.equals(playerChoice)) {
+			System.out.println("The player wins vertically!");
+		}
+		//else if(isVerticalWon.equals("no")) {
+		//	System.out.println("Nobody has won vertically.");
+		//}
+		else if(isVerticalWon.equals(computerChoice)) {
+			System.out.println("The computer has won vertically!");
+		}
+		
+		if (isRightDownDiagonalWon.equals(playerChoice)) {
+			System.out.println("The player wins right down diagonally!");
+		}
+		//else if(isRightDownDiagonalWon.equals("no")) {
+		//	System.out.println("Nobody has won right down diagonally.");
+		//}
+		else if(isRightDownDiagonalWon.equals(computerChoice)) {
+			System.out.println("The computer has won right down diagonally!");
+		}
+		
+		if (isLeftDownDiagonalWon.equals(playerChoice)) {
+			System.out.println("The player wins left down diagonally!");
+		}
+		//else if(isLeftDownDiagonalWon.equals("no")) {
+		//	System.out.println("Nobody has won left down diagonally.");
+		//}
+		else if(isLeftDownDiagonalWon.equals(computerChoice)) {
+			System.out.println("The computer has won left down diagonally!");
+		}
+		
+		playerChoice = switchTurn(playerChoice);
+		System.out.println();
+		System.out.println("Switch player turns! It is now player " + playerChoice + "'s turn.");
+		System.out.println();
+		playerTurn(playerChoice, board);
+	}
+	public static void playerTurn(String playerChoice, String[][] board) {
+		Scanner input = new Scanner(System.in);
+
+		int playerInput = 0;
+		try {
+			System.out.print("Choose your column (1-7):");
+			playerInput =  input.nextInt();
+		} 
+		catch (InputMismatchException e) {
+			System.out.println("You should've used an integer!");
+		}
+		playerInput -= 1;
+		whereItGoes(playerInput, playerChoice, board);
+		input.close();
+	}
+	
+	public static void printGame(String playerChoice, String[][] board) {
+		for (int i = 0; i < 13; i++) {
+			if (i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11) {
+				for (int j = 0; j < 30; j++) {
+					if(j == 2 || j == 6 || j == 10 || j == 14 || j == 18 || j == 22 || j == 26) {
+						int x = iConversion(i);
+						int y = jConversion(j);
+						
+						if (board[x][y] == null) {
+							System.out.print(" ");
+						}
+						else {
+							System.out.print(board[x][y]);
+						}
+					}
+					else if(j == 0 || j == 4 || j == 8 || j == 12 || j == 16 || j == 20 || j == 24 || j == 28) {
+						System.out.print("|");
+					}
+					else if (j == 29) {
+						System.out.print("\n");
+					}
+					else {
+						System.out.print(" ");
+					}
+					
+				}
+			}
+			
+			else {
+				if (i == 0)
+					System.out.print("  1   2   3   4   5   6   7\n");
+				for (int j = 0; j < 30; j++) {
+					if (j == 0 || j == 28) {
+						System.out.print("|");
+					}
+					else if(j == 4 || j == 8 || j == 12 || j == 16 || j == 20 || j == 24) {
+						System.out.print("+");
+					}
+					else if(j == 29) {
+						System.out.print("\n");
+					}
+					else {
+						System.out.print("-");
+					}
+				}
+			}
+		}
+		
+		isGameWon(playerChoice, board);
+	}
+	
+	public static int iConversion(int i) {
+		if (i == 1)
+			i = 0;
+		else if (i == 3)
+			i = 1;
+		else if (i == 5)
+			i = 2;
+		else if (i == 7)
+			i = 3;
+		else if (i == 9)
+			i = 4;
+		else if (i == 11)
+			i = 5;
+			
+		return i;
+	}
+	public static int jConversion(int j){
+		if (j == 2)
+			j = 0;
+		else if (j == 6)
+			j = 1;
+		else if (j == 10)
+			j = 2;
+		else if (j == 14)
+			j = 3;
+		else if (j == 18)
+			j = 4;
+		else if (j == 22)
+			j = 5;
+		else if (j == 26)
+			j = 6;
+		return j;
+	}
+	
+	public static void whereItGoes(int playerInput, String playerChoice, String[][] board) {
+		String board0, board1, board2, board3, board4, board5;
+		board0=board1=board2=board3=board4=board5="";
+		
+		if (board[0][playerInput] != null) {
+			board0 = board[0][playerInput];
+		}
+		if (board[1][playerInput] != null) {
+			board1 = board[1][playerInput];
+		}
+		if (board[2][playerInput] != null) {
+			board2 = board[2][playerInput];
+		}
+		if (board[3][playerInput] != null) {
+			board3 = board[3][playerInput];
+		}
+		if (board[4][playerInput] != null) {
+			board4 = board[4][playerInput];
+		}
+		if (board[5][playerInput] != null) {
+			board5 = board[5][playerInput];
+		}
+		
+		if(board0.equals("X") || board0.equals("O")) {
+			System.out.println("You can't play there!");
+		}
+		else if(board[0][playerInput] == null && (board1.equals("X") || board1.equals("O"))) {
+			board[0][playerInput] = playerChoice;
+		}
+		else if(board[1][playerInput] == null && (board2.equals("X") || board2.equals("O"))) {
+			board[1][playerInput] = playerChoice;
+		}
+		else if(board[2][playerInput] == null && (board3.equals("X") || board3.equals("O"))) {
+			board[2][playerInput] = playerChoice;
+		}
+		else if(board[3][playerInput] == null && (board4.equals("X") || board4.equals("O"))) {
+			board[3][playerInput] = playerChoice;
+		}
+		else if(board[4][playerInput] == null && (board5.equals("X") || board5.equals("O"))) {
+			board[4][playerInput] = playerChoice;
+		}
+		else if(board[5][playerInput] == null) {
+			board[5][playerInput] = playerChoice;
+		}
+		else {
+			System.out.println("Hey you shouldn't be here! Line 309");
+		}
+
+		printGame(playerChoice, board);
+
+	}
+
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		
+		//Creates 6 rows and 7 columns
+		String[][] board = new String[6][7];
+	
+		String playerChoice = "";
+		
+		System.out.println();
+		
+		do {
+			System.out.println("Welcome to connect 4! Get four in a row to win. Would you like to be X or O?: ");
+			playerChoice = input.nextLine();
+			playerChoice = playerChoice.toUpperCase();
+		} while(!playerChoice.equals("X") && !playerChoice.equals("O"));
+	
+		//TODO Set up a do-while loop to make sure a NUMBER (not string) is entered between 1 and 7
+
+		playerTurn(playerChoice, board);
+
+		input.close();
+	}
+}
