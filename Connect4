@@ -24,7 +24,7 @@ public class ConnectFour {
 		for (int i = 0; i <= 5 ; i++) {
 			for (int j = 0; j <= 6; j++) {
 				try {
-					if (board[i][j] != null && (board[i][j] == board[i+1][j-1] && board[i][j] == board[i+2][j-2] && board[i][j] == board[i+3][j-3])) {
+					if (board[i][j] != null && (board[i][j].equals(board[i+1][j-1]) && board[i][j].equals(board[i+2][j-2]) && board[i][j].equals(board[i+3][j-3]))) {
 						winner = board[i][j];
 						return winner;	
 					}
@@ -44,7 +44,7 @@ public class ConnectFour {
 		for (int i = 0; i <= 5 ; i++) {
 			for (int j = 0; j <= 6; j++) {
 				try {
-					if (board[i][j] != null && (board[i][j] == board[i+1][j+1] && board[i][j] == board[i+2][j+2] && board[i][j] == board[i+3][j+3])) {
+					if (board[i][j] != null && (board[i][j].equals(board[i+1][j+1]) && board[i][j].equals(board[i+2][j+2]) && board[i][j].equals(board[i+3][j+3]))) {
 						winner = board[i][j];
 						return winner;
 					}
@@ -62,7 +62,7 @@ public class ConnectFour {
 		for (int i = 0; i <= 6 ; i++) {
 			for (int j = 0; j <= 5; j++) {
 				try {
-					if (board[j][i] != null && (board[j][i] == board[j+1][i] && board[j][i] == board[j+2][i] && board[j][i] == board[j+3][i])) {
+					if (board[j][i] != null && (board[j][i].equals(board[j+1][i]) && board[j][i].equals(board[j+2][i]) && board[j][i].equals(board[j+3][i]))) {
 						winner = board[j][i];
 						return winner;
 						
@@ -81,7 +81,7 @@ public class ConnectFour {
 		for (int i = 0; i <= 5 ; i++) {
 			for (int j = 0; j <= 6; j++) {
 				try {
-					if (board[i][j] != null && (board[i][j] == board[i][j+1] && board[i][j] == board[i][j+2] && board[i][j] == board[i][j+3])) {
+					if (board[i][j] != null && ((board[i][j].equals(board[i][j+1])) && (board[i][j].equals(board[i][j+2])) && (board[i][j].equals(board[i][j+3])))) {
 						winner = board[i][j];
 						return winner;
 					}
@@ -90,7 +90,6 @@ public class ConnectFour {
 				}
 			}
 		}
-
 		return winner;
 	}
 	
@@ -99,7 +98,7 @@ public class ConnectFour {
 		String isVerticalWon = isVerticalWon(board);
 		String isRightDownDiagonalWon = isRightDownDiagonalWon(board);
 		String isLeftDownDiagonalWon = isLeftDownDiagonalWon(board);
-
+		/*
 		String computerChoice = "";
 		if (playerChoice.equals("O")) {
 			computerChoice = "X";
@@ -107,49 +106,56 @@ public class ConnectFour {
 		else if (playerChoice.equals("X")) {
 			computerChoice = "O";
 		}
+		
 		else {
 			System.out.println("Hey you shound't be here! Line 45");
 		}
-		
+		*/
 		if (isHorizontalWon.equals(playerChoice)) {
-			System.out.println("The player wins horizontally!");
+			System.out.println("The " + playerChoice + " player wins horizontally!");
+			System.exit(0);
 		}
 		//else if(isHorizontalWon.equals("no")) {
 		//	System.out.println("Nobody has won horizontally.");
 		//}
-		else if(isHorizontalWon.equals(computerChoice)) {
-			System.out.println("The computer has won horizontally!");
-		}
+		//else if(isHorizontalWon.equals(computerChoice)) {
+			//System.out.println("The computer has won horizontally!");
+		//}
 		
 		if (isVerticalWon.equals(playerChoice)) {
-			System.out.println("The player wins vertically!");
+			System.out.println("The " + playerChoice + " player wins vertically!");
+			System.exit(0);
+
 		}
 		//else if(isVerticalWon.equals("no")) {
 		//	System.out.println("Nobody has won vertically.");
 		//}
-		else if(isVerticalWon.equals(computerChoice)) {
-			System.out.println("The computer has won vertically!");
-		}
+		//else if(isVerticalWon.equals(computerChoice)) {
+			//System.out.println("The computer has won vertically!");
+		//}
 		
 		if (isRightDownDiagonalWon.equals(playerChoice)) {
-			System.out.println("The player wins right down diagonally!");
+			System.out.println("The " + playerChoice + " player wins diagonally!");
+			System.exit(0);
+
 		}
 		//else if(isRightDownDiagonalWon.equals("no")) {
 		//	System.out.println("Nobody has won right down diagonally.");
 		//}
-		else if(isRightDownDiagonalWon.equals(computerChoice)) {
-			System.out.println("The computer has won right down diagonally!");
-		}
+		//else if(isRightDownDiagonalWon.equals(computerChoice)) {
+			//System.out.println("The computer has won right down diagonally!");
+		//}
 		
 		if (isLeftDownDiagonalWon.equals(playerChoice)) {
-			System.out.println("The player wins left down diagonally!");
+			System.out.println("The " + playerChoice + " player wins diagonally!");
+			System.exit(0);
 		}
 		//else if(isLeftDownDiagonalWon.equals("no")) {
 		//	System.out.println("Nobody has won left down diagonally.");
 		//}
-		else if(isLeftDownDiagonalWon.equals(computerChoice)) {
-			System.out.println("The computer has won left down diagonally!");
-		}
+		//else if(isLeftDownDiagonalWon.equals(computerChoice)) {
+			//System.out.println("The computer has won left down diagonally!");
+		//}
 		
 		playerChoice = switchTurn(playerChoice);
 		System.out.println();
